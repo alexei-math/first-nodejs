@@ -1,0 +1,22 @@
+extends layout
+  
+block content
+  header(container)
+    h1 Доска заметок
+  
+    nav
+      // This will show a modal window with a form to send new notes
+      ul
+        li: a(href='#note-form' rel='modal:open') Опубликовать
+  
+  main(container).notes-list
+    // We loop over all the notes received from our controller rendering our note component with each entry
+    each note in data.notes
+      include components/note
+  
+  form(action='/note' method='POST').note-form#note-form
+    // Form to add a new note, this is used by our controller `create` function. 
+    p: input(name='noteTitle' type='text' placeholder='Заголовок…')
+    p: input(name='noteDescription' type='text' placeholder='Краткое описание…')
+    p: textarea(name='noteContent' placeholder='Здесь напишите основное содержание вашей заметки…')
+    p._text-right: input(type='submit' value='Отправить')
